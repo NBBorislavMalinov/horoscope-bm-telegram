@@ -1,0 +1,19 @@
+{
+  "name": "horoscope-bm-telegram",
+  "version": "1.0.0",
+  "description": "Weekly horoscope Telegram bot with GitHub Actions",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "send": "node index.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "openai": "^4.0.0"
+  },
+  "author": "Bobby",
+  "license": "MIT"
+}

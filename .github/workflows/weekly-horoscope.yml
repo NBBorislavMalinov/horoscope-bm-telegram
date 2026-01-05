@@ -1,0 +1,33 @@
+name: Weekly Horoscope
+
+on:
+  # Manual trigger for testing
+  workflow_dispatch:
+
+  # Every Sunday at 09:00 Sofia time (07:00 UTC in winter, 06:00 UTC in summer)
+  # Using 07:00 UTC = 09:00 Europe/Sofia (winter time)
+  schedule:
+    - cron: '0 7 * * 0'
+
+jobs:
+  send-horoscope:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Send weekly horoscope
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: npm run send
