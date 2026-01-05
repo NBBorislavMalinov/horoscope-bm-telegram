@@ -19,18 +19,15 @@ const BIRTH_DATA = {
   timezone: 'Europe/Sofia'
 };
 
-// Calculate the period (next Monday to Sunday)
+// Calculate the period (current week: Sunday to Saturday)
 function getWeekPeriod() {
   const today = new Date();
   const dayOfWeek = today.getDay();
 
-  // Calculate next Monday (if today is Sunday, next Monday is tomorrow)
-  const daysUntilMonday = dayOfWeek === 0 ? 1 : (8 - dayOfWeek);
-  const monday = new Date(today);
-  monday.setDate(today.getDate() + daysUntilMonday);
-
-  const sunday = new Date(monday);
-  sunday.setDate(monday.getDate() + 6);
+  // Start from today (Sunday) and go 6 days forward (to Saturday)
+  const start = new Date(today);
+  const end = new Date(today);
+  end.setDate(today.getDate() + 6);
 
   const formatDate = (d) => {
     const day = d.getDate().toString().padStart(2, '0');
@@ -38,7 +35,7 @@ function getWeekPeriod() {
     return `${day}.${month}`;
   };
 
-  return `${formatDate(monday)} – ${formatDate(sunday)}`;
+  return `${formatDate(start)} – ${formatDate(end)}`;
 }
 
 // Generate horoscope using OpenAI
@@ -55,7 +52,7 @@ async function generateHoroscope() {
 - Място: ${BIRTH_DATA.place}
 - Часова зона: ${BIRTH_DATA.timezone}
 
-Период: ${period} (Понеделник – Неделя)
+Период: ${period} (Неделя – Събота)
 
 ФОРМАТ (ЗАДЪЛЖИТЕЛЕН):
 - Текстът трябва да е на български език
